@@ -397,7 +397,7 @@ var pizzaElementGenerator = function(i) {
 
   return pizzaContainer;
 };
-
+////////////////////////////////////////////////////////////////////// this section up
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
 var resizePizzas = function(size) { 
   window.performance.mark("mark_start_resize");   // User Timing API function
@@ -447,13 +447,17 @@ var resizePizzas = function(size) {
 
     return dx;
   }
-
+  //Pulling out variables from changePizzaSizes' for-loop
+  var randomPizzaContainers = document.querySelectorAll(".randomPizzaContainer");
+  var randomPizzaContainersLength = randomPizzaContainers.length;
+  var dx = determineDx(randomPizzaContainers[0], size);
+  var newwidth = (randomPizzaContainers[0].offsetWidth + dx) + 'px';
+  
   // Iterates through pizza elements on the page and changes their widths
+  //Rendering is optimized since variables are already declared 
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    for (var i = 0; i < randomPizzaContainersLength; i++) {
+      randomPizzaContainers[i].style.width = newwidth;
     }
   }
 
@@ -465,7 +469,7 @@ var resizePizzas = function(size) {
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
 };
-
+////////////////////////////////////////////////////////////////////// this section up
 // Creates and stores all pizzas randomly generated but does not append them to the DOM yet. 
 var pizzaContent = document.createDocumentFragment();
 for (var i = 2; i < 100; i++) {
@@ -551,10 +555,8 @@ function updatePositions() {
   }
 }
 
-
 // runs onScroll on scroll
 window.addEventListener('scroll', onScroll);
-
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
