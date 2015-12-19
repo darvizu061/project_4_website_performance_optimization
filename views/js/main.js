@@ -397,7 +397,7 @@ var pizzaElementGenerator = function(i) {
 
   return pizzaContainer;
 };
-////////////////////////////////////////////////////////////////////// this section up
+
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
 var resizePizzas = function(size) { 
   window.performance.mark("mark_start_resize");   // User Timing API function
@@ -469,7 +469,6 @@ var resizePizzas = function(size) {
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
 };
-////////////////////////////////////////////////////////////////////// this section up
 // Creates and stores all pizzas randomly generated but does not append them to the DOM yet. 
 var pizzaContent = document.createDocumentFragment();
 for (var i = 2; i < 100; i++) {
