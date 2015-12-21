@@ -33,6 +33,9 @@ form {
   position: fixed;
   width: 256px;
   z-index: -1;
+  /*Increasing site performance with accelerated CSS (line 37, 38) */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .randomPizzaContainer {

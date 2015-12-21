@@ -1,23 +1,3 @@
-/*
-Welcome to the 60fps project! Your goal is to make Cam's Pizzeria website run
-jank-free at 60 frames per second.
-
-There are two major issues in this code that lead to sub-60fps performance. Can
-you spot and fix both?
-
-
-Built into the code, you'll find a few instances of the User Timing API
-(window.performance), which will be console.log()ing frame rate data into the
-browser console. To learn more about User Timing API, check out:
-http://www.html5rocks.com/en/tutorials/webperformance/usertiming/
-
-Creator:
-Cameron Pittman, Udacity Course Developer
-cameron *at* udacity *dot* com
-*/
-
-// As you may have realized, this website randomly generates pizzas.
-// Here are arrays of all possible pizza ingredients.
 var pizzaIngredients = {};
 pizzaIngredients.meats = [
   "Pepperoni",
@@ -360,6 +340,8 @@ var makeRandomPizza = function() {
 
 // returns a DOM element for each pizza
 var pizzaElementGenerator = function(i) {
+    // Enable function strict mode 
+  "use strict";
   var pizzaContainer,             // contains pizza title, image and list of ingredients
       pizzaImageContainer,        // contains the pizza image
       pizzaImage,                 // the pizza image itself
@@ -400,19 +382,21 @@ var pizzaElementGenerator = function(i) {
 
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
 var resizePizzas = function(size) { 
+  // Enable function strict mode 
+  "use strict";
   window.performance.mark("mark_start_resize");   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("#pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("#pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("#pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -424,7 +408,8 @@ var resizePizzas = function(size) {
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx (elem, size) {
     var oldWidth = elem.offsetWidth;
-    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
+      // change querySelector to web api getElementById
+    var windowWidth = document.getElementById("randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
     // TODO: change to 3 sizes? no more xl?
@@ -448,7 +433,8 @@ var resizePizzas = function(size) {
     return dx;
   }
   //Pulling out variables from changePizzaSizes' for-loop
-  var randomPizzaContainers = document.querySelectorAll(".randomPizzaContainer");
+  // change querySelectorAll to web api getElementsByClassName
+  var randomPizzaContainers = document.getElementsByClassName("randomPizzaContainer");
   var randomPizzaContainersLength = randomPizzaContainers.length;
   var dx = determineDx(randomPizzaContainers[0], size);
   var newwidth = (randomPizzaContainers[0].offsetWidth + dx) + 'px';
@@ -529,6 +515,8 @@ function requestScroll(){
 
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
+    // Enable function strict mode 
+  "use strict";
   //reset ticker to false to wait for next onScroll call
   ticker = false;
   frame++;
@@ -562,14 +550,21 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
   var allSlidingPizzas = document.createDocumentFragment(); //stores pizzas before appending to DOM
-
-  for (var i = 0; i < 200; i++) {
-    var elem = document.createElement('img');
+  //Pull out elem and left variable from for-loop to avoid re-declaration every time.
+  var elem; 
+  var left;
+  //Declaring windowHeight and neededPizzas variables to calculate amount of pizzas needed for screen
+  var windowHeight = (window.innerHeight || document.documentElement.clientHeight || 1080)
+  var neededPizzas = Math.ceil(windowHeight / s) * cols;
+  for (var i = 0; i < neededPizzas; i++) {
+    elem = document.createElement('img');
+    left = (i % cols) * s;
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
+    elem.style.left = left + 'px';
+    elem.basicLeft = left;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     allSlidingPizzas.appendChild(elem);
   }
