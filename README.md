@@ -6,7 +6,7 @@ Super easy to view both main pages in the project.
 
 First page optimized is index.html, second page optimized is views/pizza.html.
 
-Everything is basic html5, css and JS. Just download project and run both main pages to view.
+Everything is basic html5, CSS and JS. Just download project and run both main pages to view.
 
 ## Project Solution
 #### Part 1: Optimize PageSpeed Insights score for index.html
@@ -14,18 +14,18 @@ Everything is basic html5, css and JS. Just download project and run both main p
 ##### Step 1
 **Problem**
 
-Google Analytic js code and google font code is blocking browser rendering path.
+Google Analytic js code and Google font code is blocking browser rendering path.
 
 **Solution**
 
-Move google font to bottom of DOM to unblock rendering.
+Move Google font to bottom of DOM to unblock rendering.
 
 Save analytic code into renderAnalytic.js, move js file to bottom of DOM and add `async` attribute to unblock browser rendering path.
 
 ##### Step 2
 **Problem**
 
-Images are to large and must be compressed.
+Images are too large and must be compressed.
 
 **Solution**
 
